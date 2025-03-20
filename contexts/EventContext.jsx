@@ -9,13 +9,17 @@ export const EventProvider = ({ children }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showEventList, setShowEventList] = useState(false)
 
+  // current filter inputs
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   //applied filter
 
   const [appliedFilters, setAppliedFilters] = useState({
     searchTerm: "",
+    selectedLocation:"",
   });
 
   // filtered events based on the applied filter
@@ -62,14 +66,17 @@ export const EventProvider = ({ children }) => {
 
   const handleSubmit = () => {
     setIsLoading(true);
-    setAppliedFilters({ searchTerm });
+    setShowEventList(true);
+    setAppliedFilters({ searchTerm, selectedLocation });
     setTimeout(() => {
       setIsLoading(false)
-    }, 7500);
+    }, 2500);
   };
 
   const handleClearSearch = () => {
     setSearchTerm("");
+    setShowEventList(false);
+    setSelectedLocation("");
   };
 
   return (
@@ -83,6 +90,8 @@ export const EventProvider = ({ children }) => {
         filteredEvents,
         handleSubmit,
         handleClearSearch,
+        showEventList,
+        selectedLocation,
       }}
     >
       {children}

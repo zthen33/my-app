@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
-
-import EventSearch from "./EventSearch";
 import { EventContext } from "@/contexts/EventContext";
+
+//components
+import EventSearch from "./EventSearch";
+import EventLocation from "./EventLocation";
+
 const Searchbar = () => {
   const { handleSubmit } = useContext(EventContext);
   return (
@@ -14,7 +17,7 @@ const Searchbar = () => {
       {/* event search */}
       <EventSearch />
       {/* event location */}
-      <div>Event Location</div>
+      <EventLocation />
       {/* event date */}
       <div>Event Date</div>
       {/* event type */}
