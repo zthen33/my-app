@@ -39,11 +39,11 @@ export default {
         grey: "#737373",
       },
       backgroundImage: {
-        hero_bg1: "url(/assets/hero/hero-bg1.png)",
-        hero_bg2: "url(/assets/hero/hero-bg2.png)",
+        hero_1: "url(/assets/hero/hero-bg1.png)",
+        hero_2: "url(/assets/hero/hero-bg2.png)",
         pattern: "url(/assets/pattern_bg.png)",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("daisyui")],
+  plugins: [require("tailwindcss-animate")],
 };

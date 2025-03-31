@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-primary text-white font-primary;
+  @apply bg-primary text-white font-primary min-h-screen;
 }
 
 .h1,
@@ -39,7 +39,7 @@ body {
   @apply min-w-[112px] h-[48px] rounded-full flex items-center justify-center text-sm font-medium transition-all;
 }
 
-.btn-actent {
+.btn-accent {
   @apply bg-accent hover:bg-accent-hover;
 }
 
@@ -51,4 +51,7 @@ body {
   @apply bg-tertiary hover:bg-tertiary-hover;
 }
 
-
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+  @apply bg-accent;
+}

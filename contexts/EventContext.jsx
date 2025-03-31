@@ -9,37 +9,59 @@ export const EventProvider = ({ children }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [showEventList, setShowEventList] = useState(false)
+  const [showEventList, setShowEventList] = useState(false);
 
   // current filter inputs
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   //applied filter
 
   const [appliedFilters, setAppliedFilters] = useState({
     searchTerm: "",
-    selectedLocation:"",
+    selectedLocation: "",
+    selectedDate: null,
+    selectedType,
   });
 
   // filtered events based on the applied filter
 
-  const filteredEvents = useMemo(
-    () => {
-      return events.filter((event) => {
-        // Check search term
-        const matchesSearch = appliedFilters.searchTerm
-          ? event.title
-              .toLowerCase()
-              .includes(appliedFilters.searchTerm.toLowerCase())
-          : true;
+  const filteredEvents = useMemo(() => {
+    const today = new Date();
+    return events.filter((event) => {
+      //check event date (exclude past event)
+      const eventDate = new Date(event.date);
+      if (eventDate < today) return false;
 
-        return matchesSearch;
-      });
-    },
-    [events, appliedFilters] // Dependency array as an array
-  );
-  console.log(filteredEvents);
+      // Check search term
+      const matchesSearch = appliedFilters.searchTerm
+        ? event.title
+            .toLowerCase()
+            .includes(appliedFilters.searchTerm.toLowerCase())
+        : true;
+
+      // check location
+      const matchesLocation = appliedFilters.selectedLocation
+        ? event.location.toLowerCase() ===
+          appliedFilters.selectedLocation.toLowerCase()
+        : true;
+
+      // check date
+      const matchesDate = appliedFilters.selectedDate
+        ? eventDate.toDateString() ===
+          new Date(appliedFilters.selectedDate).toDateString()
+        : true;
+
+      // check type
+      const matchesType = appliedFilters.selectedType
+        ? event.type.toLowerCase() === appliedFilters.selectedType.toLowerCase()
+        : true;
+
+      return matchesSearch && matchesLocation && matchesDate && matchesType;
+    });
+  }, [events, appliedFilters]);
 
   //fetch events
   useEffect(() => {
@@ -67,9 +89,14 @@ export const EventProvider = ({ children }) => {
   const handleSubmit = () => {
     setIsLoading(true);
     setShowEventList(true);
-    setAppliedFilters({ searchTerm, selectedLocation });
+    setAppliedFilters({
+      searchTerm,
+      selectedLocation,
+      selectedDate,
+      selectedType,
+    });
     setTimeout(() => {
-      setIsLoading(false)
+      setIsLoading(false);
     }, 2500);
   };
 
@@ -77,6 +104,8 @@ export const EventProvider = ({ children }) => {
     setSearchTerm("");
     setShowEventList(false);
     setSelectedLocation("");
+    setSelectedDate(null);
+    setSelectedType("");
   };
 
   return (
@@ -92,6 +121,11 @@ export const EventProvider = ({ children }) => {
         handleClearSearch,
         showEventList,
         selectedLocation,
+        setSelectedLocation,
+        selectedDate,
+        setSelectedDate,
+        selectedType,
+        setSelectedType,
       }}
     >
       {children}
