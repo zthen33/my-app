@@ -47,9 +47,7 @@ const RecommendedEvents = () => {
         >
           {filterRecommendedEvents.map((event, index) => (
             <SwiperSlide key={index} className="select-none">
-              <Link href={`/events/${event.id}`}>
-                {" "}
-                {/* Thêm đường dẫn động */}
+              <Link href={`/event/${event.id}`}>
                 <Event event={event} />
               </Link>
             </SwiperSlide>

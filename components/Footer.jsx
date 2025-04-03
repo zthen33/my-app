@@ -29,7 +29,6 @@ const Footer = () => {
     <footer className="bg-accent bg-pattern bg-cover bg-blend-multity pt-16">
       <div className="container mx-auto border-b border-white/40">
         {/* text & form input & socials */}
-        <div>text & socials</div>
         <div className="flex flex-col max-w-[550px] mx-auto text-center">
           <div className="mb-9">
             <h2 className="h2 mb-3">Your Event Connection</h2>
